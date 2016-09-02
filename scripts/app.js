@@ -51,7 +51,7 @@ render: function() {
         <h1 className="text-center heading">Checklista</h1>
         <TodoListItems data={this.state.data} />
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
-        <button className="btn btn-danger" onClick={this.clearLocalStorage()}>Clear All</button>
+        <button className="btn btn-danger">Clear All</button>
       </div>
   );
 }
