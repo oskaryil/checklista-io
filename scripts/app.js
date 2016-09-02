@@ -45,7 +45,7 @@ clearLocalStorage: function() {
     localStorage.clear();
     location.reload()
   }
-  setInterval(clear(), 2000);
+  clear();
 },
 
 render: function() {
