@@ -48,7 +48,7 @@ clearLocalStorage: function() {
 render: function() {
   return(
       <div id="todoList" className="center-block">
-        <h1 className="text-center heading">To-Do List</h1>
+        <h1 className="text-center heading">Checklista</h1>
         <TodoListItems data={this.state.data} />
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
         <button className="btn btn-danger" onClick={this.clearLocalStorage()}>Clear All</button>
