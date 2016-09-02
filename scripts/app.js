@@ -41,11 +41,11 @@ handleItemSubmit: function(todoItem) {
   console.log(JSON.parse(localStorage.getItem('data')));
 },
 clearLocalStorage: function() {
-  function clear() {
-    localStorage.clear();
-    location.reload()
-  }
-  clear();
+  localStorage.clear();
+  setTimeout(function() {
+    location.reload();
+  }, 2000);
+  
 },
 
 render: function() {
