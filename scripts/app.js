@@ -41,7 +41,7 @@ handleItemSubmit: function(todoItem) {
   console.log(JSON.parse(localStorage.getItem('data')));
 },
 clearLocalStorage: function() {
-  setInterval(localStorage.clear(), pollInterval);
+  setInterval(localStorage.clear(), 2000);
 },
 
 render: function() {
