@@ -50,7 +50,7 @@ render: function() {
         <h1 className="text-center heading">To-Do List</h1>
         <TodoListItems data={this.state.data} />
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
-        <button className="btn btn-lg btn-primary" onChange={this.clearLocalStorage}>Clear All</button>
+        <button className="btn btn-lg btn-primary" onChange={this.clearLocalStorage()}>Clear All</button>
       </div>
   );
 }
