@@ -169,13 +169,13 @@ render: function() {
   return(
     <div className="row">
       <div className="col-md-12">
-        <li className="todoItem">
+        <li className="todoItem animated fadeIn">
           <div className="checkbox checkbox-circle checkBox">
             <input id={this.props.uid.toString()} onChange={this.handleCheckedd} className="styled" type="checkbox" />
             <label htmlFor={this.props.uid.toString()}>{this.props.children.toString()}</label>
           </div>
               {/*<p className="todo-text">{this.props.children.toString()}</p>*/}
-              <i className="fa fa-pdencil edit-pencil"></i>
+              <i className="fa fa-pencil edit-pencil"></i>
               <em>{this.props.date}</em>
         </li>
       </div>
