@@ -40,9 +40,10 @@ handleItemSubmit: function(todoItem) {
   this.setState({data: JSON.parse(localStorage.getItem('data'))});
   console.log(JSON.parse(localStorage.getItem('data')));
 },
-clearLocalStorage: function() {
-  localStorage.clear();
-  
+
+clearItems: function() {
+  localStorage.setItem('data', '[]');
+  this.state.data = '[]';
 },
 
 render: function() {
@@ -51,7 +52,7 @@ render: function() {
         <h1 className="text-center heading">Checklista</h1>
         <TodoListItems data={this.state.data} />
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
-        <button className="btn btn-danger">Clear All</button>
+        <button onClick={this.clearItems} className="btn btn-danger">Clear All</button>
       </div>
   );
 }
@@ -77,16 +78,26 @@ render: function() {
 });
 
 var TodoItem = React.createClass({
-// rawMarkup: function() {
-//   var md = new Remarkable();
-//   var rawMarkup = md.render(this.props.children.toString());
-//   return { __html: rawMarkup};
-// },
-  componentDidMount: function()   {
-    this.setState({uid: this.props.uid});
-  },
 
-handleCheckedd: function(e, uid) {
+// getInitialState: function() {
+//   return null;
+// },
+
+componentDidMount: function() {
+  var data = JSON.parse(localStorage.getItem('data'));
+  data.forEach(function(item){
+    if(item.checked) {
+      $("label[for='" + item.id.toString()+"']").addClass('line-through');
+      $("#"+item.id.toString()).prop("checked", true);
+    } else {
+      // $("label[for='" + item.id.toString()+"']").removeClass('line-through');
+      $("#"+item.id.toString()).prop("checked", false);
+
+    }
+  });
+},
+
+handleCheckedd: function(e) {
   // if($('.todo-text').innerHTML === this.props.children.toString()) {
   //   console.log('works');
   // }
@@ -107,20 +118,60 @@ handleCheckedd: function(e, uid) {
   // if(checked) {
   //   console.log("hello");
   // }
+  // var labels = document.getElementsByTagName('LABEL');
+  // for(var i = 0; i < labels.length; i++) {
+  //   if(labels[i].htmlFor != '') {
+  //     var elem = document.getElementById(labels[i].htmlFor);
+  //     if(elem) {
+  //       elem.label = labels[i];
+  //       console.log(elem.label);
+  //       // document.getElementsByClassName('checkBox').label.innerHTML = "hello world";
+  //     }
+  //   }
+  // }
+  var label = $("label[for='"+e.target.id+"']");
+  this.setState({label: label});
+
+  var data = JSON.parse(localStorage.getItem('data'));
+  data.forEach(function(item) {
+    if(item.id === parseInt(e.target.id)) {
+
+      if(e.target.checked) {
+        item.checked = true;
+        $("label[for='"+e.target.id+"']").addClass("line-through");
+      } else {
+        item.checked = false;
+        $("label[for='"+e.target.id+"']").removeClass("line-through");
+
+      }
+    }
+  });
+
+  localStorage.setItem('data', JSON.stringify(data));
 },
+
+// getInitialState: function() {
+//   return ({label: null});
+// },
+
+// componentDidMount: function() {
+//     if(this.props.checked) {
+//     this.state.label.addClass('line-through');
+//   } else {
+//     this.state.label.removeClass('line-through');
+//   }
+
+// },
 
 render: function() {
 
-  var handleChecked = function(e, props) {
-
-  }
 
   return(
     <div className="row">
       <div className="col-md-12">
         <li className="todoItem">
           <div className="checkbox checkbox-circle checkBox">
-            <input id={this.props.uid.toString()} onChange={handleChecked(null, this.props)} className="styled" type="checkbox" />
+            <input id={this.props.uid.toString()} onChange={this.handleCheckedd} className="styled" type="checkbox" />
             <label htmlFor={this.props.uid.toString()}>{this.props.children.toString()}</label>
           </div>
               {/*<p className="todo-text">{this.props.children.toString()}</p>*/}
