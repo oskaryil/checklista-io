@@ -95,3 +95,11 @@ em {
 .line-through {
   text-decoration: line-through;
 }
+
+.btn {
+  margin-right: 4px;
+}
+
+button:focus {
+  outline: 0 !important;
+}

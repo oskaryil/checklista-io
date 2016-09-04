@@ -37,13 +37,28 @@ handleItemSubmit: function(todoItem) {
   var newItems = todoItems.concat([todoItem]);
   this.setState({data: todoItems});
   localStorage.setItem('data', JSON.stringify(newItems));
-  this.setState({data: JSON.parse(localStorage.getItem('data'))});
+  // this.setState({data: JSON.parse(localStorage.getItem('data'))}); // replaced with line below
+  this.setState({data: newItems}); // replaced ^
   console.log(JSON.parse(localStorage.getItem('data')));
 },
 
 clearItems: function() {
   localStorage.setItem('data', '[]');
-  this.state.data = '[]';
+  this.setState({data: '[]'});
+  location.reload();
+},
+clearChecked: function() {
+  var data = this.state.data;
+  data.forEach(function(item) {
+    console.log(item);
+    if(item.checked) {
+      $("#"+item.id.toString()).remove();
+      var index = data.indexOf(item);
+      data.splice(index, 1);
+    }
+  });
+  localStorage.setItem('data', JSON.stringify(data));
+  this.setState({data: data});
 },
 
 render: function() {
@@ -53,6 +68,7 @@ render: function() {
         <TodoListItems data={this.state.data} />
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
         <button onClick={this.clearItems} className="btn btn-danger">Clear All</button>
+        <button onClick={this.clearChecked} className="btn btn-warning">Clear Checked</button>
       </div>
   );
 }
@@ -97,38 +113,8 @@ componentDidMount: function() {
   });
 },
 
-handleCheckedd: function(e) {
-  // if($('.todo-text').innerHTML === this.props.children.toString()) {
-  //   console.log('works');
-  // }
-  // $('.todo-text').toggleClass('line-through');
-  // var data = this.props.data;
-  // data[this.props.key].checked = true;
+handleChecked: function(e) {
 
-
-  // $("input:checkbox").change(
-  // function(){
-  //     if ($(this).is(':checked')) {
-  //       var labelFor = $("label[for='"+uid+"'");
-  //       console.log(labelFor);
-  //       labelFor.toggleClass('line-through');
-  //     }
-  // });
-
-  // if(checked) {
-  //   console.log("hello");
-  // }
-  // var labels = document.getElementsByTagName('LABEL');
-  // for(var i = 0; i < labels.length; i++) {
-  //   if(labels[i].htmlFor != '') {
-  //     var elem = document.getElementById(labels[i].htmlFor);
-  //     if(elem) {
-  //       elem.label = labels[i];
-  //       console.log(elem.label);
-  //       // document.getElementsByClassName('checkBox').label.innerHTML = "hello world";
-  //     }
-  //   }
-  // }
   var label = $("label[for='"+e.target.id+"']");
   this.setState({label: label});
 
@@ -147,21 +133,13 @@ handleCheckedd: function(e) {
     }
   });
 
-  localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem('data', JSON.stringify(data));
+  $.ajax({
+
+
+  });
 },
 
-// getInitialState: function() {
-//   return ({label: null});
-// },
-
-// componentDidMount: function() {
-//     if(this.props.checked) {
-//     this.state.label.addClass('line-through');
-//   } else {
-//     this.state.label.removeClass('line-through');
-//   }
-
-// },
 
 render: function() {
 
@@ -171,7 +149,7 @@ render: function() {
       <div className="col-md-12">
         <li className="todoItem animated fadeIn">
           <div className="checkbox checkbox-circle checkBox">
-            <input id={this.props.uid.toString()} onChange={this.handleCheckedd} className="styled" type="checkbox" />
+            <input id={this.props.uid.toString()} onChange={this.handleChecked} className="styled" type="checkbox" />
             <label htmlFor={this.props.uid.toString()}>{this.props.children.toString()}</label>
           </div>
               {/*<p className="todo-text">{this.props.children.toString()}</p>*/}
