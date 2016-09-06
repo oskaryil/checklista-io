@@ -112,7 +112,7 @@ button:focus {
   text-decoration: none;
 }
 
-@media screen and (min-width: 320px) {
+@media screen and (min-width: 120px) {
   ul {
     padding-left: 0;
   }
