@@ -69,6 +69,7 @@ render: function() {
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
         <button onClick={this.clearItems} className="btn btn-danger">Clear All</button>
         <button onClick={this.clearChecked} className="btn btn-warning">Clear Checked</button>
+        <button className="btn btn-primary bug-report"><a href="" className=""><i className="fa fa-bug"></i> Bug report</a></button>
       </div>
   );
 }
@@ -140,10 +141,13 @@ handleChecked: function(e) {
   });
 },
 
+editText: function(e) {
+  console.log(this.state.label);
+},
+
+
 
 render: function() {
-
-
   return(
     <div className="row">
       <div className="col-md-12">
@@ -153,7 +157,7 @@ render: function() {
             <label htmlFor={this.props.uid.toString()}>{this.props.children.toString()}</label>
           </div>
               {/*<p className="todo-text">{this.props.children.toString()}</p>*/}
-              <i className="fa fa-pencil edit-pencil"></i>
+              <i onClick={this.editText} className="fa fa-pencil edit-pencil"></i>
               <em>{this.props.date}</em>
         </li>
       </div>
@@ -196,6 +200,6 @@ render: function() {
 });
 
 ReactDOM.render(
-<TodoListApp url="/api/comments" pollInterval={2000} />,
+<TodoListApp pollInterval={2000} />,
 document.getElementById('content')
 );
