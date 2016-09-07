@@ -69,7 +69,6 @@ render: function() {
         <TodoListForm onItemSubmit={this.handleItemSubmit} />
         <button onClick={this.clearItems} className="btn btn-danger">Clear All</button>
         <button onClick={this.clearChecked} className="btn btn-warning">Clear Checked</button>
-        <button className="btn btn-primary bug-report"><a href="" className=""><i className="fa fa-bug"></i> Bug report</a></button>
       </div>
   );
 }
